@@ -1,9 +1,8 @@
+import { Button } from "@/components/ui/button"
 const Login = ()=> {
-    return (
-        <div>
-            <h1>Login</h1>
-        </div>
-    );
+  return (
+    <Button variant="outline">Button</Button>
+  )
 } 
 
 export default Login;
