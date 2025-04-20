@@ -1,0 +1,6 @@
+@layer components{
+  .button-black-white{
+    @apply w-full bg-black-1 py-2 text-white rounded-md
+    hover:bg-white hover:border-1 hover:border-black hover:text-black-1 transition-all duration-400;
+  }
+}
