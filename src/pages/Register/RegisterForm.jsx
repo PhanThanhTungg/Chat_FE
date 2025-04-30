@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FaUserEdit } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaPhone } from "react-icons/fa6";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import { PiPasswordFill } from "react-icons/pi";
@@ -11,11 +11,13 @@ import { validateEmail, validatePassword, validatePhone, validateRePassword } fr
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import Alert from "../../components/ui/Alert";
+import { register } from "@/services/user.service";
 
 const RegisterForm = () => {
   const passwordRef = useRef(null);
   const rePasswordRef = useRef(null);
-  const [alert, setAlert] = useState(false);
+  const [alert, setAlert] = useState(null);
+  const navigate = useNavigate();
   const [validate, setValidate] = useState({
     email: null,
     phone: null,
@@ -83,14 +85,48 @@ const RegisterForm = () => {
     e.preventDefault();
     const listCheck = Object.values(validate);
     const checkAll = listCheck.every(item => item != null);
-    if(!checkAll)
-      setAlert(prev=>!prev);
+    if (!checkAll) setAlert({
+      type: "error",
+      mess: "Please check your input again",
+      time: 3000
+    });
+    else {
+      let { email, phone, fullName, password, repassword } = e.target;
+    
+      const callApi = async () => {
+        const res = await register({ 
+          email: email.value,
+          phone: phone.value, 
+          fullName: fullName.value,
+          password: password.value,
+          repassword: repassword.value
+         });
+        if(!res.error){
+          setAlert({
+            type: "success",
+            mess: "Register successfully",
+            time: 3000
+          });
+          navigate("/login");
+        }
+        else{
+          setAlert({
+            type: "error",
+            mess: res.error.message,
+            time: 3000
+          });
+        }
+        
+      }
+      callApi();
+    }
+
   }
   return (
     <div className="mt-8 w-full max-w-md mx-auto">
-      <Alert type="error" mess="Please enter all infomation !" time="2000" state={alert}/>
+      <Alert type={alert?.type} mess={alert?.mess} time={alert?.time} state={alert} />
       <form className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4"
-      onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
       >
         <div className="space-y-6">
           <div className="grid w-full items-center gap-2 text-black-1">
