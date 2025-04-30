@@ -12,11 +12,12 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import Alert from "../../components/ui/Alert";
 import { register } from "@/services/user.service";
+import useAlert from "@/hooks/useAlert";
 
 const RegisterForm = () => {
   const passwordRef = useRef(null);
   const rePasswordRef = useRef(null);
-  const [alert, setAlert] = useState(null);
+  const { openAlert } = useAlert();
   const navigate = useNavigate();
   const [validate, setValidate] = useState({
     email: null,
@@ -85,38 +86,37 @@ const RegisterForm = () => {
     e.preventDefault();
     const listCheck = Object.values(validate);
     const checkAll = listCheck.every(item => item != null);
-    if (!checkAll) setAlert({
-      type: "error",
+    if (!checkAll) openAlert({
+      typeAlert: "error",
       mess: "Please check your input again",
       time: 3000
     });
     else {
       let { email, phone, fullName, password, repassword } = e.target;
-    
+
       const callApi = async () => {
-        const res = await register({ 
+        const res = await register({
           email: email.value,
-          phone: phone.value, 
+          phone: phone.value,
           fullName: fullName.value,
           password: password.value,
           repassword: repassword.value
-         });
-        if(!res.error){
-          setAlert({
-            type: "success",
-            mess: "Register successfully",
+        });
+        if (!res.error) {
+          openAlert({
+            typeAlert: "success",
+            message: "Register successfully",
             time: 3000
           });
-          navigate("/login");
+          navigate("/");
         }
-        else{
-          setAlert({
-            type: "error",
-            mess: res.error.message,
+        else {
+          openAlert({
+            typeAlert: "error",
+            message: res.error.message,
             time: 3000
           });
         }
-        
       }
       callApi();
     }
