@@ -7,5 +7,6 @@ export const get = async(path)=>{
 
 export const post = async(path, data, config )=>{
   const res = await axios.post(path, data, config)
+  console.log("res: ", res);
   return res;
 }

@@ -1,13 +1,21 @@
-import { Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
+import { checkAuth } from "../../helpers/handleJWT.helper.js";
 
-const LayoutDefault = ()=>{
+const LayoutDefault = () => {
+  const checkAuthen = checkAuth();
   return (
     <>
-      <Header/>
-      <Outlet/>
-      <Footer/>
+      {
+        checkAuthen ? (
+          <>
+            <Header />
+            <Outlet />
+            <Footer />
+          </>
+        ) : <Navigate to="/login"></Navigate>
+      }
     </>
   )
 }

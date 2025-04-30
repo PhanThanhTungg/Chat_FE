@@ -2,13 +2,44 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FaUserEdit } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Checkbox } from "@/components/ui/checkbox";
+import { login } from "@/services/user.service";
+import useAlert from "@/hooks/useAlert";
 
 const LoginForm = () => {
+  const {openAlert} = useAlert();
+  const Navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const callApi = async()=>{
+      const {email, password} = e.target.elements;
+      const res = await login({
+        email: email.value,
+        password: password.value
+      });
+      if(!res.error){
+        openAlert({
+          typeAlert: "success",
+          message: "Login successfully",
+          time: 3000
+        })
+        Navigate("/");
+      }
+      else{
+        openAlert({
+          typeAlert: "error",
+          message: res.error.message,
+          time: 3000
+        })
+      }
+    }
+    callApi();
+  }
+
   return (
     <div className="mt-8 w-full max-w-md mx-auto">
-      <form className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
+      <form className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
         <div className="space-y-6">
           <div className="grid w-full items-center gap-2 text-black-1">
             <Label htmlFor="email" className="text-sm font-medium">Email</Label>
