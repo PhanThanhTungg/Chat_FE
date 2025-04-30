@@ -3,8 +3,9 @@ import LayoutDefault from "../layouts/LayoutDefault";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import { createBrowserRouter } from "react-router-dom";
 
-const routes = [
+const routes = createBrowserRouter([
   {
     path: "/",
     element: <LayoutDefault />,
@@ -21,5 +22,6 @@ const routes = [
     ]
   }
 
-]
+])
+
 export default routes;

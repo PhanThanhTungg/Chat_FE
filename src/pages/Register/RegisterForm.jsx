@@ -10,10 +10,12 @@ import { useRef, useState } from "react";
 import { validateEmail, validatePassword, validatePhone, validateRePassword } from "@/helpers/InputValidation.helper";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import Alert from "../../components/ui/Alert";
 
 const RegisterForm = () => {
   const passwordRef = useRef(null);
   const rePasswordRef = useRef(null);
+  const [alert, setAlert] = useState(false);
   const [validate, setValidate] = useState({
     email: null,
     phone: null,
@@ -77,9 +79,19 @@ const RegisterForm = () => {
     }
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const listCheck = Object.values(validate);
+    const checkAll = listCheck.every(item => item != null);
+    if(!checkAll)
+      setAlert(prev=>!prev);
+  }
   return (
     <div className="mt-8 w-full max-w-md mx-auto">
-      <form className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
+      <Alert type="error" mess="Please enter all infomation !" time="2000" state={alert}/>
+      <form className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4"
+      onSubmit={handleSubmit}
+      >
         <div className="space-y-6">
           <div className="grid w-full items-center gap-2 text-black-1">
             <Label htmlFor="email" className="text-sm font-medium">Email</Label>
@@ -93,6 +105,7 @@ const RegisterForm = () => {
                 id="email"
                 placeholder="Enter your email"
                 onChange={handleChange}
+                required
                 className="border-gray-200 rounded-md border-l-0 rounded-l-none"
               />
               {validate.email == true && <IoMdCheckmarkCircleOutline className="absolute right-2 text-green-700" />}
@@ -111,6 +124,7 @@ const RegisterForm = () => {
                 id="phone"
                 name="phone"
                 onChange={handleChange}
+                required
                 placeholder="Enter your phone"
                 className="border-gray-200 rounded-md border-l-0 rounded-l-none"
               />
@@ -130,6 +144,7 @@ const RegisterForm = () => {
                 id="fullName"
                 name="fullName"
                 onChange={handleChange}
+                required
                 placeholder="Enter your display name"
                 className="border-gray-200 rounded-md border-l-0 rounded-l-none"
               />
@@ -150,6 +165,7 @@ const RegisterForm = () => {
                 id="password"
                 name="password"
                 onChange={handleChange}
+                required
                 placeholder="Enter your password"
                 className="border-gray-200 rounded-md border-l-0 rounded-l-none"
               />
@@ -170,6 +186,7 @@ const RegisterForm = () => {
                 name="repassword"
                 ref={rePasswordRef}
                 onChange={handleChange}
+                required
                 placeholder="Enter your re-password"
                 className="border-gray-200 rounded-md border-l-0 rounded-l-none"
               />

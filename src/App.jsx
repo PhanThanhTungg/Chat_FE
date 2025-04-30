@@ -1,10 +1,10 @@
-import AllRoute from "./components/AllRoute"
-import Login from "./pages/Login"
+import { RouterProvider } from "react-router-dom";
+import routes from "./routes";
 
 function App() {
   return (
     <>
-      <AllRoute/>
+      <RouterProvider router = {routes}/>
     </>
   )
 }

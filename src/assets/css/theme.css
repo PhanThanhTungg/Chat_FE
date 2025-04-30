@@ -1,4 +1,15 @@
 @theme{
   --color-bg-light: rgba(0, 0, 0, 0.05);
   --color-black-1: #3A4148;
+  --animate-right-to-left: right-to-left 0.5s ease-in-out;
+}
+@keyframes right-to-left{
+  0%{
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100%{
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
