@@ -1,6 +1,6 @@
 import { Link, Navigate, Outlet } from "react-router-dom";
-import Footer from "./Footer";
-import Header from "./Header";
+import Footer from "./Footer.js";
+import Header from "./Header.js";
 import { checkAuth } from "../../helpers/handleJWT.helper.js";
 
 const LayoutDefault = () => {

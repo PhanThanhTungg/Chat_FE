@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { showAlert } from "@/actions/alert.action";
+import { showAlert } from "../actions/alert.action";
 
 const useAlert = ()=>{
   const dispatch = useDispatch();

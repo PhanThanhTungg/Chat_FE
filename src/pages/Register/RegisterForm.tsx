@@ -1,5 +1,5 @@
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Input } from "../../components/ui/input";
+import { Label } from "../../components/ui/label";
 import { FaUserEdit } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -7,12 +7,12 @@ import { FaPhone } from "react-icons/fa6";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import { PiPasswordFill } from "react-icons/pi";
 import { useRef, useState } from "react";
-import { validateEmail, validatePassword, validatePhone, validateRePassword } from "@/helpers/InputValidation.helper";
+import { validateEmail, validatePassword, validatePhone, validateRePassword } from "../../helpers/InputValidation.helper";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import Alert from "../../components/ui/Alert";
-import { register } from "@/services/user.service";
-import useAlert from "@/hooks/useAlert";
+import { register } from "../../services/user.service";
+import useAlert from "../../hooks/useAlert";
 
 const RegisterForm = () => {
   const passwordRef = useRef(null);
