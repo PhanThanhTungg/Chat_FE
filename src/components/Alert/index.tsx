@@ -1,4 +1,4 @@
-import { hideAlert } from "../../../actions/alert.action";
+import { hideAlert } from "../../actions/alert.action";
 import { useEffect } from "react";
 import { CiWarning } from "react-icons/ci";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
