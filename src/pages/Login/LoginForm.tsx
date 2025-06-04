@@ -6,12 +6,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Checkbox } from "@/components/ui/checkbox";
 import { login } from "@/services/user.service";
 import useAlert from "@/hooks/useAlert";
-import type { JSX } from "react";
-import type { LoginInput } from "@/types/auth.type";
+import { useContext, type JSX } from "react";
+import type { AuthResponse, LoginInput} from "@/types/auth.type";
+import { UserContext } from "@/contexts/auth.context";
 
 const LoginForm = (): JSX.Element => {
   const { openAlert } = useAlert();
   const Navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const callApi = async () => {
@@ -26,7 +28,7 @@ const LoginForm = (): JSX.Element => {
         email: email,
         password: password
       };
-      const res = await login(loginInput);
+      const res:AuthResponse = await login(loginInput);
 
       // handle response
       if (!res.error) {
@@ -35,7 +37,15 @@ const LoginForm = (): JSX.Element => {
           message: "Login successfully",
           time: 3000
         })
-        Navigate("/");
+        if(res.user && res.accessToken){
+          const accessToken = res.accessToken;
+          const user = res.user;
+          setUser({
+            accessToken: accessToken,
+            user: user
+          });
+          Navigate("/");
+        }
       }
       else{
         openAlert({

@@ -7,9 +7,12 @@ export interface LoginInput {
 }
 
 export interface SuccessAuthResponse extends Response {
+  accessToken: string;
   user: {
     fullName: string;
-    accessToken: string;
+    email: string;
+    phone: string;
+    avatar: string;
   };
 }
 
@@ -18,9 +21,12 @@ export interface ErrorAuthResponse extends Response {
 }
 
 export interface AuthResponse{
+  accessToken?: string;
   user?: {
     fullName: string;
-    accessToken: string;
+    email: string;
+    phone: string;
+    avatar?: string;
   };
   error?: {
     message: string;
@@ -43,10 +49,23 @@ export interface RegisterInput extends LoginInput {
 
 //use Auth
 export interface User{
-  accessToken: string;
-  id: string;
-  email: string;
-  fullName: string;
+  accessToken?: string;
+  user?:{
+    fullName: string;
+    email: string;
+    phone: string;
+    avatar?: string;
+  }
+}
 
+export interface UserContextType {
+  user: User | null;
+  setUser: (user: User | null) => void;
+}
+
+export interface checkAuthResponse {
+  isAuthenticated: boolean;
+  isRefreshed?: boolean;
+  accessToken?: string;
 }
 
