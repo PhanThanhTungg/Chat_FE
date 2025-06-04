@@ -10,7 +10,7 @@ import { useRef, useState } from "react";
 import { validateEmail, validatePassword, validatePhone, validateRePassword } from "../../helpers/InputValidation.helper";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import Alert from "../../components/Alert";
+import Alert from "../../components/common/Alert";
 import { register } from "../../services/user.service";
 import useAlert from "../../hooks/useAlert";
 

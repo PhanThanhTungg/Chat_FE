@@ -1,23 +1,27 @@
-import {jwtDecode} from "jwt-decode";
-export const checkAuth = () => {
-  const token = localStorage.getItem("accessToken");
-  if (!token) return false;
+import { jwtDecode } from "jwt-decode";
+
+interface JWTPayload {
+  exp: number;
+}
+
+export const checkAuth = (): boolean => {
+  const token: string | null = localStorage.getItem("accessToken");
+  if (!token || token === "null") return false;
 
   try {
-    const decoded = jwtDecode(token);
-    console.log("decoded jwt: ");
-    console.log(decoded);
+    const decoded: JWTPayload = jwtDecode<JWTPayload>(token);
+    console.log("Decoded JWT:", decoded);
 
-    const currentTime = Date.now() / 1000; // Current time in seconds
+    const currentTime: number = Date.now() / 1000;
     if (decoded.exp < currentTime) {
       console.log("Token expired");
       localStorage.removeItem("accessToken");
       return false;
     }
-
     return true;
   } catch (error) {
-    console.log(error);
+    console.log("Error decoding JWT:", error);
+    localStorage.removeItem("accessToken"); 
     return false;
   }
-}
+};

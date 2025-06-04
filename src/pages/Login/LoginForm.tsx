@@ -6,19 +6,30 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Checkbox } from "@/components/ui/checkbox";
 import { login } from "@/services/user.service";
 import useAlert from "@/hooks/useAlert";
+import type { JSX } from "react";
+import type { LoginInput } from "@/types/auth.type";
 
-const LoginForm = () => {
-  const {openAlert} = useAlert();
+const LoginForm = (): JSX.Element => {
+  const { openAlert } = useAlert();
   const Navigate = useNavigate();
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const callApi = async()=>{
-      const {email, password} = e.target.elements;
-      const res = await login({
-        email: email.value,
-        password: password.value
-      });
-      if(!res.error){
+    const callApi = async () => {
+      
+      // get form data
+      const formData = new FormData(e.currentTarget);
+      const email = formData.get("email") + "";
+      const password = formData.get("password") + "";
+
+      // call login API
+      const loginInput: LoginInput = {
+        email: email,
+        password: password
+      };
+      const res = await login(loginInput) as { error?: { message?: string } };
+
+      // handle response
+      if (!res.error) {
         openAlert({
           typeAlert: "success",
           message: "Login successfully",
@@ -73,7 +84,7 @@ const LoginForm = () => {
             </div>
           </div>
 
-          <div class="flex justify-between">
+          <div className="flex justify-between">
             <div className="flex items-center space-x-2">
               <Checkbox id="remember" />
               <label

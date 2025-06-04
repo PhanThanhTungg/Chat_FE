@@ -1,4 +1,6 @@
-export default (state = {}, action) => {
+import type { ShowAlertActionOutput } from "@/types/Alert.type";
+
+export default (state = {}, action: ShowAlertActionOutput) => {
   switch (action.type) {
     case "show":
       return {

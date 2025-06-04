@@ -1,15 +1,17 @@
-import { hideAlert } from "../../actions/alert.action";
-import { useEffect } from "react";
+import type { RootState } from "@/main";
+import { hideAlert } from "../../../actions/alert.action";
+import { memo, useEffect } from "react";
 import { CiWarning } from "react-icons/ci";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { memo } from "react";
+import type { ShowAlertActionInput } from "@/types/Alert.type";
 const Alert = () => {
-  let alertInfo = useSelector(state => state.alertReducer);
 
-  let mainColor="";
-  if(alertInfo){
-    if(alertInfo.typeAlert == "error"){
+  const alertInfo = useSelector((state: RootState) => state.alertReducer) as ShowAlertActionInput;
+
+  let mainColor = "red-700";
+  if (alertInfo) {
+    if (alertInfo.typeAlert == "error") {
       mainColor = "red-700";
     }
     else if (alertInfo.typeAlert == "success"){
@@ -40,4 +42,5 @@ const Alert = () => {
     </>
   )
 }
+
 export default memo(Alert);

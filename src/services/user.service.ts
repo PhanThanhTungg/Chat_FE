@@ -1,4 +1,4 @@
-const prePath = "http://localhost:3000";
+import type { ErrorAuthResponse, LoginInput, SuccessAuthResponse } from "@/types/auth.type";
 import * as request from "../helpers/request.helper";
 
 const handleAuth = (res) => {
@@ -7,22 +7,15 @@ const handleAuth = (res) => {
   }
 }
 
-export const register = async(data)=>{
-  const res = await request.post(`${prePath}/user/register`, JSON.stringify(data), {
-    headers:{
-      "Content-Type":"application/json"
-    }
-  })
+export const register = async(data: RegisterInput)=>{
+  const res = await request.post(`/user/register`, data);
   handleAuth(res);
   return res;
 }
 
-export const login = async(data)=>{
-  const res = await request.post(`${prePath}/user/login`, JSON.stringify(data), {
-    headers:{
-      "Content-Type":"application/json"
-    }
-  })
+export const login = async(data: LoginInput)=>{
+  const res:object = await request.post(`/user/login`, data);
   handleAuth(res);
+  console.log("login res", res);
   return res;
 }

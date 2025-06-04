@@ -1,12 +1,11 @@
 import axios from '../services/axios-customize.service';
 
-export const get = async(path)=>{
-  const data = await axios.get(path)
+export const get = async(path:string)=>{
+  const data:object = await axios.get(path)
   return data;
 }
 
-export const post = async(path, data, config )=>{
-  const res = await axios.post(path, data, config)
-  console.log("res: ", res);
+export const post = async(path:string, data:object, config?:object)=>{
+  const res:object = await axios.post(path, data, config);
   return res;
 }

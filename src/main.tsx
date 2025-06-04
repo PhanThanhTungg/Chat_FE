@@ -6,6 +6,7 @@ import {createStore} from "redux";
 import indexReducer  from './reducers/index.reducer';
 import { Provider } from 'react-redux';
 const store = createStore(indexReducer);
+export type RootState = ReturnType<typeof store.getState>;
 
 const ENABLE_STRICT_MODE = import.meta.env['ENABLE_STRICT_MODE'] || false;
 
