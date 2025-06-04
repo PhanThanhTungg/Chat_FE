@@ -1,4 +1,4 @@
-import type { ShowAlertActionOutput, TypeAlert } from "@/types/Alert.type";
+import type { ShowAlertActionOutput, TypeAlert } from "@/types/alert.type";
 
 export const showAlert = (typeAlert: TypeAlert, message: string, time: number): ShowAlertActionOutput => {
   return {

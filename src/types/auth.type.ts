@@ -1,4 +1,4 @@
-import type { Response } from "./common.type";
+import type { Response } from "./response.type";
 
 // login
 export interface LoginInput {
@@ -39,5 +39,14 @@ export interface RegisterInput extends LoginInput {
   fullName: string;
   phone: string;
   repassword: string;
+}
+
+//use Auth
+export interface User{
+  accessToken: string;
+  id: string;
+  email: string;
+  fullName: string;
+
 }
 

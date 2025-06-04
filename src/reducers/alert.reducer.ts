@@ -1,4 +1,4 @@
-import type { ShowAlertActionOutput } from "@/types/Alert.type";
+import type { ShowAlertActionOutput } from "@/types/alert.type";
 
 export default (state = {}, action: ShowAlertActionOutput) => {
   switch (action.type) {

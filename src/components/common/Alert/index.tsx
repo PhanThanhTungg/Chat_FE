@@ -4,7 +4,7 @@ import { memo, useEffect } from "react";
 import { CiWarning } from "react-icons/ci";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import type { ShowAlertActionInput } from "@/types/Alert.type";
+import type { ShowAlertActionInput } from "@/types/alert.type";
 const Alert = () => {
 
   const alertInfo = useSelector((state: RootState) => state.alertReducer) as ShowAlertActionInput;

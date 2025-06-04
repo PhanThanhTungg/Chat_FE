@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { showAlert } from "../actions/alert.action";
-import type { ShowAlertActionInput, ShowAlertActionOutput } from "@/types/Alert.type";
+import type { ShowAlertActionInput, ShowAlertActionOutput } from "@/types/alert.type";
 
 const useAlert = ()=>{
   const dispatch = useDispatch();

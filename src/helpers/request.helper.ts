@@ -5,7 +5,7 @@ export const get = async(path:string)=>{
   return data;
 }
 
-export const post = async(path:string, data:object, config?:object)=>{
+export const post = async(path:string, data?:object, config?:object)=>{
   const res:object = await axios.post(path, data, config);
   return res;
 }
