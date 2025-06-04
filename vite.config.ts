@@ -5,7 +5,7 @@ import Checker from 'vite-plugin-checker';
 import path from "path"
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss(), Checker({ typescript: false })],
+  plugins: [react(), tailwindcss(), Checker({ typescript: true })],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

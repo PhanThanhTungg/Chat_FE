@@ -17,7 +17,27 @@ export interface ErrorAuthResponse extends Response {
   error: string;
 }
 
+export interface AuthResponse{
+  user?: {
+    fullName: string;
+    accessToken: string;
+  };
+  error?: {
+    message: string;
+  };
+}
+
+// register
+export interface CheckRegisterInput {
+  email: boolean | null;
+  phone: boolean | null;
+  fullName: boolean | null;
+  password: boolean | null;
+  repassword: boolean | null;
+}
 export interface RegisterInput extends LoginInput {
-  name: string;
+  fullName: string;
+  phone: string;
+  repassword: string;
 }
 

@@ -10,16 +10,16 @@ import { useRef, useState } from "react";
 import { validateEmail, validatePassword, validatePhone, validateRePassword } from "../../helpers/InputValidation.helper";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import Alert from "../../components/common/Alert";
 import { register } from "../../services/user.service";
 import useAlert from "../../hooks/useAlert";
+import type { CheckRegisterInput } from "@/types/auth.type";
 
 const RegisterForm = () => {
   const passwordRef = useRef(null);
-  const rePasswordRef = useRef(null);
+  const repasswordRef = useRef(null);
   const { openAlert } = useAlert();
   const navigate = useNavigate();
-  const [validate, setValidate] = useState({
+  const [validate, setValidate] = useState<CheckRegisterInput>({
     email: null,
     phone: null,
     fullName: null,
@@ -27,10 +27,10 @@ const RegisterForm = () => {
     repassword: null
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "email") {
-      const checkEmail = validateEmail(value);
+      const checkEmail:boolean|null = validateEmail(value);
       setValidate(prev => {
         return {
           ...prev,
@@ -40,7 +40,7 @@ const RegisterForm = () => {
     }
 
     if (name === "phone") {
-      const checkPhone = validatePhone(value);
+      const checkPhone:boolean|null = validatePhone(value);
       setValidate(prev => {
         return {
           ...prev,
@@ -60,39 +60,47 @@ const RegisterForm = () => {
 
 
     if (name === "password") {
-      const checkPassword = validatePassword(value);
-      const checkRepassword = validateRePassword(passwordRef.current.value, rePasswordRef.current.value);
+      const passwordRefCurrent = passwordRef.current as HTMLInputElement | null;
+      const repasswordRefCurrent = repasswordRef.current as HTMLInputElement | null;
+      
+      const checkPassword:boolean|null = validatePassword(value);
+      const checkrepassword:boolean|null = passwordRefCurrent && repasswordRefCurrent ? 
+        validateRePassword(passwordRefCurrent.value, repasswordRefCurrent.value) : null;
       setValidate(prev => {
         return {
           ...prev,
           password: checkPassword,
-          repassword: checkRepassword
+          repassword: checkrepassword
         }
       })
     }
 
     if (name === "repassword") {
-      const checkRepassword = validateRePassword(passwordRef.current.value, rePasswordRef.current.value);
+      const passwordRefCurrent = passwordRef.current as HTMLInputElement | null;
+      const repasswordRefCurrent = repasswordRef.current as HTMLInputElement | null;
+      const checkrepassword = passwordRefCurrent && repasswordRefCurrent ?
+        validateRePassword(passwordRefCurrent.value, repasswordRefCurrent.value) : null;
+
       setValidate(prev => {
         return {
           ...prev,
-          repassword: checkRepassword
+          repassword: checkrepassword
         }
       })
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:React.FocusEvent<HTMLFormElement>) => {
     e.preventDefault();
     const listCheck = Object.values(validate);
     const checkAll = listCheck.every(item => item != null);
     if (!checkAll) openAlert({
       typeAlert: "error",
-      mess: "Please check your input again",
+      message: "Please check your input again",
       time: 3000
     });
     else {
-      let { email, phone, fullName, password, repassword } = e.target;
+      const { email, phone, fullName, password, repassword } = e.target;
 
       const callApi = async () => {
         const res = await register({
@@ -101,7 +109,7 @@ const RegisterForm = () => {
           fullName: fullName.value,
           password: password.value,
           repassword: repassword.value
-        });
+        }) as { error?: { message: string } };
         if (!res.error) {
           openAlert({
             typeAlert: "success",
@@ -124,7 +132,6 @@ const RegisterForm = () => {
   }
   return (
     <div className="mt-8 w-full max-w-md mx-auto">
-      <Alert type={alert?.type} mess={alert?.mess} time={alert?.time} state={alert} />
       <form className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4"
         onSubmit={handleSubmit}
       >
@@ -220,7 +227,7 @@ const RegisterForm = () => {
                 type="password"
                 id="repassword"
                 name="repassword"
-                ref={rePasswordRef}
+                ref={repasswordRef}
                 onChange={handleChange}
                 required
                 placeholder="Enter your re-password"

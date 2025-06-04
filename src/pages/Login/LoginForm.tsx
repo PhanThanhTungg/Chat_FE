@@ -26,7 +26,7 @@ const LoginForm = (): JSX.Element => {
         email: email,
         password: password
       };
-      const res = await login(loginInput) as { error?: { message?: string } };
+      const res = await login(loginInput);
 
       // handle response
       if (!res.error) {
