@@ -11,6 +11,8 @@ const LayoutDefault = () => {
   const [isLoading, setLoading] = useState<boolean>(true);
   const { user } = useContext(UserContext);
 
+  console.log("authen", authen);
+
   useEffect(() => {
     const check = async () => {
       const checkResult = await checkAuth(user?.accessToken || null);

@@ -1,6 +1,7 @@
 import axios, { type AxiosResponse, type InternalAxiosRequestConfig } from "axios";
 
 axios.defaults.baseURL = import.meta.env['VITE_BACKEND_URL'];
+axios.defaults.withCredentials = true;
 
 axios.interceptors.request.use(function (config: InternalAxiosRequestConfig) {
   const accessToken = localStorage.getItem('accessToken');
