@@ -10,9 +10,8 @@ const LayoutAuth = () => {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    const check = async () => {
-      const checkResult = await checkAuth(user?.accessToken || null);
-      
+    const check = async ():Promise<void> => {
+      const checkResult:checkAuthResponse = await checkAuth(user?.accessToken || null);
       checkAuthen(checkResult);
       setLoading(false);
     };

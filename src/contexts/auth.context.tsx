@@ -15,7 +15,6 @@ export const UserProvider = ({children}:{children: React.ReactNode}) => {
     {accessToken,user:JSON.parse(userFromStorage)} : null;
 
   const [user, setUser] = useState<User | null>(initialUser);
-  console.log(user);
   return (
     <UserContext value={{ user, setUser }}>
       {children}
