@@ -10,6 +10,7 @@ function App() {
       <UserProvider>
         <RouterProvider router={routes} />
       </UserProvider>
+
     </>
   )
 }

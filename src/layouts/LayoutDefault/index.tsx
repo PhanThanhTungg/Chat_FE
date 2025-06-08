@@ -1,10 +1,11 @@
 import { Navigate, Outlet } from "react-router-dom";
-import Footer from "./Footer.js";
-import Header from "./Header.js";
 import { checkAuth } from "../../helpers/handleJWT.helper.js";
 import { UserContext } from "@/contexts/auth.context.js";
 import { useContext, useEffect, useState } from "react";
 import type { checkAuthResponse } from "@/types/auth.type.js";
+
+import { SidebarProvider } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/common/Sidebar";
 
 const LayoutDefault = () => {
   const [authen, checkAuthen] = useState<checkAuthResponse>({ isAuthenticated: false });
@@ -12,8 +13,8 @@ const LayoutDefault = () => {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    const check = async ():Promise<void> => {
-      const checkResult:checkAuthResponse = await checkAuth(user?.accessToken || null);
+    const check = async (): Promise<void> => {
+      const checkResult: checkAuthResponse = await checkAuth(user?.accessToken || null);
       checkAuthen(checkResult);
       setLoading(false);
     };
@@ -27,9 +28,17 @@ const LayoutDefault = () => {
       <>
         {authen?.isAuthenticated ? (
           <>
-            <Header />
-            <Outlet />
-            <Footer />
+            <SidebarProvider defaultOpen = {true}
+              style={{
+              "--sidebar-width": "5rem",
+              "--sidebar-width-mobile": "5rem",
+            } as React.CSSProperties}
+            >
+              <AppSidebar />
+              <main>
+                <Outlet />
+              </main>
+            </SidebarProvider>
           </>
         ) : (
           <Navigate to="/login"></Navigate>

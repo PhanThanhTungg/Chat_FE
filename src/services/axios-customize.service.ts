@@ -26,7 +26,7 @@ axios.interceptors.response.use(function (response: AxiosResponse) {
       console.log('Access token refreshed successfully');
 
       localStorage.setItem('accessToken', accessToken);
-
+      
       if (originalRequest.headers) {
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
       }

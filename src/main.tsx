@@ -10,6 +10,11 @@ export type RootState = ReturnType<typeof store.getState>;
 
 const ENABLE_STRICT_MODE = import.meta.env['ENABLE_STRICT_MODE'] || false;
 
+import { io } from 'socket.io-client';
+const URL = import.meta.env['VITE_NODE_ENV'] === 'production' ? undefined : import.meta.env['VITE_BACKEND_URL'];
+
+export const socket = io(URL);
+
 const AppComponent = (
   <Provider store={store}>
     <App />

@@ -5,11 +5,16 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 
 import { createBrowserRouter, type RouteObject } from "react-router-dom";
+import { ThemeProvider } from "@/contexts/theme.context";
 
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <LayoutDefault />,
+    element: <>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <LayoutDefault />
+      </ThemeProvider>
+    </>,
     children: [
       { path: "/", element: <Home /> },
     ],

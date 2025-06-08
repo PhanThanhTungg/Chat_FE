@@ -58,11 +58,6 @@ export interface User{
   }
 }
 
-export interface UserContextType {
-  user: User | null;
-  setUser: (user: User | null) => void;
-}
-
 export interface checkAuthResponse {
   isAuthenticated: boolean;
   isRefreshed?: boolean;
