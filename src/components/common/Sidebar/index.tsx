@@ -1,7 +1,6 @@
 import { Settings } from "lucide-react"
 import { User, MessageCircle, UsersRound, UserRoundCheck} from "lucide-react"
 
-
 import {
   Sidebar,
   SidebarContent,
@@ -11,6 +10,7 @@ import {
   SidebarMenu,
   SidebarMenuButton
 } from "@/components/ui/sidebar"
+import ToggleTheme from "../ToggleTheme"
 
 const items = [
   {
@@ -44,8 +44,8 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu className= "pt-[100px]">
+          <SidebarGroupContent className="text-center">
+            <SidebarMenu className= "pt-[100px] mb-[150px]">
               {items.map((item) => (
                 <SidebarMenuButton asChild className="py-6">
                   <a href={item.url}>
@@ -54,6 +54,7 @@ export function AppSidebar() {
                 </SidebarMenuButton>
               ))}
             </SidebarMenu>
+            <ToggleTheme/>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
