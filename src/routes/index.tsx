@@ -6,6 +6,8 @@ import Register from "../pages/Register";
 
 import { createBrowserRouter, type RouteObject } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/theme.context";
+import Error404 from "@/pages/Error404";
+import Contact from "@/pages/Contact";
 
 const routes: RouteObject[] = [
   {
@@ -17,6 +19,7 @@ const routes: RouteObject[] = [
     </>,
     children: [
       { path: "/", element: <Home /> },
+      { path: "/contacts", element: <Contact /> },
     ],
   },
   {
@@ -24,8 +27,11 @@ const routes: RouteObject[] = [
     element: <LayoutAuth />,
     children: [
       { path: "/login", element: <Login /> },
-      { path: "/register", element: <Register /> }
+      { path: "/register", element: <Register /> },
     ]
+  },{
+    path: "*",
+    element: <Error404 />
   }
 ]
 const BrowserRouter = createBrowserRouter(routes);

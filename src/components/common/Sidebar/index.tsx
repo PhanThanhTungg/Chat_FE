@@ -11,30 +11,32 @@ import {
   SidebarMenuButton
 } from "@/components/ui/sidebar"
 import ToggleTheme from "../ToggleTheme"
+import { Link } from "react-router-dom"
 
 const items = [
   {
     des: "Profile",
-    url: "#",
+    url: "/profile",
     icon: User,
   },
   {
     des: "Chats",
-    url: "#",
+    url: "/chats",
     icon: MessageCircle,
   },
   {
     des: "Groups",
-    url: "#",
+    url: "/groups",
     icon: UsersRound,
   },
   {
     des: "Contacts",
-    url: "#",
+    url: "/contacts",
     icon: UserRoundCheck,
   },
   {
-    url: "#",
+    des: "Settings",
+    url: "/settings",
     icon: Settings,
   },
 ]
@@ -48,9 +50,9 @@ export function AppSidebar() {
             <SidebarMenu className= "pt-[100px] mb-[150px]">
               {items.map((item) => (
                 <SidebarMenuButton asChild className="py-6">
-                  <a href={item.url}>
+                  <Link to={item.url} title={item.des}>
                     <item.icon/>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               ))}
             </SidebarMenu>
