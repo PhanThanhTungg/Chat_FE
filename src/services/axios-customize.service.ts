@@ -1,4 +1,5 @@
 import axios, { type AxiosResponse, type InternalAxiosRequestConfig } from "axios";
+import { refreshToken } from "./user.service";
 
 axios.defaults.baseURL = import.meta.env['VITE_BACKEND_URL'];
 axios.defaults.withCredentials = true;
@@ -21,17 +22,25 @@ axios.interceptors.response.use(function (response: AxiosResponse) {
     const originalRequest = error.config;
     error.config._retry = true;
     try {
-      const res = await axios.post('/user/refreshToken');
-      const { accessToken } = res.data;
-      console.log('Access token refreshed successfully');
-
-      localStorage.setItem('accessToken', accessToken);
-      
-      if (originalRequest.headers) {
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+      const res = await refreshToken();
+      if(res && res.accessToken){
+        const { accessToken } = res;
+        console.log('Access token refreshed successfully');
+  
+        localStorage.setItem('accessToken', accessToken);
+        
+        if (originalRequest.headers) {
+          originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+        }
+        return axios(originalRequest);
       }
-
-      return axios(originalRequest);
+      else{
+        console.error('Failed to refresh access token');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+        return Promise.reject(new Error('Failed to refresh access token'));
+      }
     } catch (error) {
       console.error('Refresh token failed:', error);
       localStorage.removeItem('accessToken');

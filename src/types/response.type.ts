@@ -7,3 +7,14 @@ export type ErrorResponse = {
   message: string;
 }
 
+
+// User search response type
+export interface UserSearch {
+  id: string;
+  fullName: string;
+  avatar?: string;
+}
+export interface ResponseUserSearch extends Response {
+  users: UserSearch[];
+}
+

@@ -1,6 +1,6 @@
 @layer components{
   .tab-content{
-    @apply w-[25rem] h-full
+    @apply w-[25rem] h-full p-[24px] border-r-2
   }
 
   .button-black-white{

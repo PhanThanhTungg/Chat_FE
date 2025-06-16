@@ -21,8 +21,6 @@ export const login = async(data: LoginInput)=>{
 }
 
 export const refreshToken = async()=>{
-  const res:AuthResponse = await request.post(`/user/refreshToken`, {}, {
-    withCredentials: true
-  });
+  const res:AuthResponse = await request.post(`/user/refreshToken`, {});
   return res;
 }
