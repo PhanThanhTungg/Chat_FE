@@ -6,6 +6,7 @@ import type { checkAuthResponse } from "@/types/auth.type.js";
 
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/common/Sidebar";
+import { SocketProvider } from "@/contexts/socket.context.js";
 
 const LayoutDefault = () => {
   const [authen, checkAuthen] = useState<checkAuthResponse>({ isAuthenticated: false });
@@ -28,17 +29,19 @@ const LayoutDefault = () => {
       <>
         {authen?.isAuthenticated ? (
           <>
-            <SidebarProvider defaultOpen = {true}
-              style={{
-              "--sidebar-width": "5rem",
-              "--sidebar-width-mobile": "5rem",
-            } as React.CSSProperties}
-            >
-              <AppSidebar />
-              <main>
-                <Outlet />
-              </main>
-            </SidebarProvider>
+            <SocketProvider>
+              <SidebarProvider defaultOpen={true}
+                style={{
+                  "--sidebar-width": "5rem",
+                  "--sidebar-width-mobile": "5rem",
+                } as React.CSSProperties}
+              >
+                <AppSidebar />
+                <main>
+                  <Outlet />
+                </main>
+              </SidebarProvider>
+            </SocketProvider>
           </>
         ) : (
           <Navigate to="/login"></Navigate>
